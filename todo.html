@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>TO DO</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #1a1625;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .headline {
+            font-size: 2.2rem;
+            color: #a259ff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            letter-spacing: 0.12em;
+            font-weight: 700;
+            margin: 38px 0 18px 38px;
+            text-align: left;
+        }
+        .section-title {
+            font-size: 1.3rem;
+            color: #fff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 600;
+            margin: 32px 0 12px 38px;
+            text-align: left;
+            letter-spacing: 0.08em;
+        }
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 22px;
+            padding: 0 0 8px 38px;
+            scrollbar-width: thin;
+            scrollbar-color: #a259ff #23232b;
+        }
+        .carousel::-webkit-scrollbar {
+            height: 8px;
+            background: #23232b;
+        }
+        .carousel::-webkit-scrollbar-thumb {
+            background: #a259ff;
+            border-radius: 8px;
+        }
+        .card {
+            flex: 0 0 180px;
+            background: #23232b;
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(60,60,120,0.13);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s;
+            cursor: pointer;
+        }
+        .card:hover {
+            transform: scale(1.07);
+            box-shadow: 0 8px 32px 0 #a259ff44;
+            z-index: 2;
+        }
+        .card-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            background: #191927;
+            display: block;
+        }
+        .card-title {
+            font-size: 1.05rem;
+            color: #fff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 600;
+            margin: 12px 0 10px 0;
+            padding: 0 14px;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .plus-btn {
+            position: fixed;
+            right: 32px;
+            bottom: 32px;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a259ff 60%, #6d28d9 100%);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 24px #a259ff55;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.7rem;
+            cursor: pointer;
+            z-index: 100;
+            transition: background 0.18s, box-shadow 0.18s;
+        }
+        .plus-btn:hover {
+            background: linear-gradient(135deg, #a259ff 80%, #7c3aed 100%);
+            box-shadow: 0 8px 32px #a259ff99;
+        }
+        .main-content {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+        .modal-bg {
+            position: fixed;
+            left: 0; top: 0; right: 0; bottom: 0;
+            background: rgba(30,20,60,0.85);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal {
+            background: #23232b;
+            border-radius: 18px;
+            box-shadow: 0 4px 32px #a259ff55;
+            padding: 32px 28px 24px 28px;
+            min-width: 340px;
+            max-width: 94vw;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 18px;
+        }
+        .modal label {
+            color: #a259ff;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+        .modal input {
+            background: #191927;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-family: inherit;
+        }
+        .modal input[type="file"] {
+            color: #fff;
+            background: none;
+            padding: 0;
+        }
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            margin-top: 8px;
+        }
+        .modal-btn {
+            background: #a259ff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 22px;
+            font-size: 1.1rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s;
+        }
+        .modal-btn.cancel {
+            background: #23232b;
+            color: #a259ff;
+            border: 1px solid #a259ff;
+        }
+        .remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #a259ff;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #a259ff44;
+            opacity: 0.85;
+            transition: background 0.18s, opacity 0.18s;
+            z-index: 10;
+        }
+        .remove-btn:hover {
+            background: #7c3aed;
+            opacity: 1;
+        }
+        .done-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: #43e97b;
+            color: #23232b;
+            border: none;
+            border-radius: 18px;
+            padding: 6px 18px;
+            font-size: 1rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px #43e97b44;
+            opacity: 0.92;
+            transition: background 0.18s, opacity 0.18s;
+            z-index: 10;
+        }
+        .done-btn:hover {
+            background: #2ecc71;
+            opacity: 1;
+        }
+        .empty-hint {
+            color: #a259ff;
+            font-size: 1.1rem;
+            margin: 36px 0 0 38px;
+            font-family: 'Montserrat', Arial, sans-serif;
+            opacity: 0.7;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .headline {
+                font-size: 1.5rem;
+                margin: 22px 0 12px 18px;
+            }
+            .section-title {
+                font-size: 1.05rem;
+                margin: 18px 0 8px 18px;
+            }
+            .carousel {
+                gap: 10px;
+                padding-left: 10px;
+            }
+            .card {
+                flex: 0 0 140px;
+            }
+            .card-img {
+                height: 120px;
+            }
+        }
+        @media (max-width: 600px) {
+            .headline {
+                font-size: 1.1rem;
+                margin: 14px 0 8px 8px;
+            }
+            .section-title {
+                font-size: 0.95rem;
+                margin: 12px 0 6px 8px;
+            }
+            .carousel {
+                gap: 6px;
+                padding-left: 4px;
+            }
+            .card {
+                flex: 0 0 110px;
+                border-radius: 10px;
+            }
+            .card-img {
+                height: 70px;
+                border-radius: 10px;
+            }
+            .plus-btn, #done-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 1.5rem;
+                right: 16px !important;
+                bottom: 16px !important;
+            }
+            #done-btn {
+                right: 70px !important;
+            }
+            .modal {
+                min-width: 90vw;
+                padding: 18px 8px 14px 8px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="index.html" title="Zurück" style="
+        position: fixed;
+        top: 24px;
+        right: 32px;
+        z-index: 2000;
+        text-decoration: none;
+        color: #a259ff;
+        font-size: 1.35rem;
+        font-family: 'Montserrat', Arial, sans-serif;
+        background: rgba(35,35,43,0.92);
+        border-radius: 28px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 12px #a259ff33;
+        transition: background 0.18s, color 0.18s;
+        padding: 0 22px 0 18px;
+        min-width: 90px;
+        gap: 8px;
+    " onmouseover="this.style.background='#a259ff';this.style.color='#fff';" onmouseout="this.style.background='rgba(35,35,43,0.92)';this.style.color='#a259ff';">
+        Zurück
+        <span style="font-size:1.1rem; margin-left:4px; display:inline-block; vertical-align:middle;">&#8592;</span>
+    </a>
+    <div class="headline">TO DO</div>
+    <div class="-content">
+        <div class="section-title">Aufgaben</div>
+        <div class="carousel" id="todo-list">
+            <!-- Dynamisch -->
+        </div>
+        <div class="empty-hint" id="todo-empty">Noch keine Aufgaben hinzugefügt.</div>
+    </div>
+    <button class="plus-btn" title="Hinzufügen" id="add-btn">+</button>
+    <button id="done-btn" title="Erledigt" style="
+        position: fixed;
+        right: 110px;
+        bottom: 32px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #6d28d9 60%, #a259ff 100%);
+        color: #fff;
+        border: none;
+        box-shadow: 0 4px 18px #a259ff44;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 101;
+        transition: background 0.18s, box-shadow 0.18s;
+    ">
+        ✔️
+    </button>
+    <div id="done-modal-bg" class="modal-bg" style="display:none;">
+        <div class="modal" style="max-width:500px;">
+            <div style="font-size:1.3rem;color:#a259ff;font-family:'Montserrat',Arial,sans-serif;font-weight:700;margin-bottom:12px;">
+                Erledigt
+            </div>
+            <div id="done-list" style="max-height:320px;overflow-y:auto;">
+                <!-- Dynamisch -->
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="modal-btn cancel" id="done-close-btn">Schließen</button>
+            </div>
+        </div>
+    </div>
+    <div id="modal-bg" class="modal-bg" style="display:none;">
+        <form class="modal" id="add-form">
+            <label for="title">Titel</label>
+            <input id="title" type="text" placeholder="Titel" required maxlength="40" autocomplete="off"/>
+            <label for="img">Bild (URL oder Datei)</label>
+            <input id="img" type="url" placeholder="https://..." autocomplete="off"/>
+            <input id="imgfile" type="file" accept="image/*" style="margin-bottom:10px; color:#fff;"/>
+            <div class="modal-actions">
+                <button type="button" class="modal-btn cancel" id="cancel-btn">Abbrechen</button>
+                <button type="submit" class="modal-btn">Hinzufügen</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        // --- State ---
+        let todos = [];
+        let done = [];
+
+        // --- Local Storage Helpers ---
+        const STORAGE_KEY = 'notiq-todo-state-v1';
+        function saveState() {
+            const state = { todos, done };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+        function loadState() {
+            try {
+                const state = JSON.parse(localStorage.getItem(STORAGE_KEY));
+                if (state) {
+                    todos = Array.isArray(state.todos) ? state.todos : [];
+                    done = Array.isArray(state.done) ? state.done : [];
+                }
+            } catch {}
+        }
+
+        // --- DOM ---
+        const addBtn = document.getElementById('add-btn');
+        const modalBg = document.getElementById('modal-bg');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const addForm = document.getElementById('add-form');
+        const titleInput = document.getElementById('title');
+        const imgInput = document.getElementById('img');
+        const imgFileInput = document.getElementById('imgfile');
+        const todoList = document.getElementById('todo-list');
+        const todoEmpty = document.getElementById('todo-empty');
+        const doneBtn = document.getElementById('done-btn');
+        const doneModalBg = document.getElementById('done-modal-bg');
+        const doneList = document.getElementById('done-list');
+        const doneCloseBtn = document.getElementById('done-close-btn');
+
+        // --- Helpers ---
+        function render() {
+            todoList.innerHTML = '';
+            if (todos.length === 0) {
+                todoEmpty.style.display = '';
+            } else {
+                todoEmpty.style.display = 'none';
+                for (const [i, t] of todos.entries()) {
+                    todoList.appendChild(createCard(t, i));
+                }
+            }
+            saveState();
+        }
+
+        function createCard(item, idx) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            // Remove button
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '×';
+            removeBtn.title = 'Entfernen';
+            removeBtn.onclick = (e) => {
+                e.stopPropagation();
+                todos.splice(idx, 1);
+                render();
+            };
+            card.appendChild(removeBtn);
+            // Done button
+            const doneBtn = document.createElement('button');
+            doneBtn.className = 'done-btn';
+            doneBtn.innerText = 'Erledigt';
+            doneBtn.title = 'Als erledigt markieren';
+            doneBtn.onclick = (e) => {
+                e.stopPropagation();
+                card.classList.add('watched-anim');
+                card.style.transition = 'opacity 0.4s, transform 0.4s';
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.85)';
+                setTimeout(() => {
+                    done.push({ ...todos[idx] });
+                    todos.splice(idx, 1);
+                    render();
+                }, 350);
+            };
+            card.appendChild(doneBtn);
+            // Image
+            const img = document.createElement('img');
+            img.className = 'card-img';
+            img.src = item.img || 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80';
+            img.alt = item.title;
+            card.appendChild(img);
+            // Title
+            const title = document.createElement('div');
+            title.className = 'card-title';
+            title.innerText = item.title;
+            card.appendChild(title);
+            return card;
+        }
+
+        // --- Modal logic ---
+        addBtn.onclick = () => {
+            modalBg.style.display = 'flex';
+            addForm.reset();
+            titleInput.focus();
+        };
+        cancelBtn.onclick = () => {
+            modalBg.style.display = 'none';
+        };
+        modalBg.onclick = (e) => {
+            if (e.target === modalBg) modalBg.style.display = 'none';
+        };
+
+        addForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const title = titleInput.value.trim();
+            let img = imgInput.value.trim();
+            if (!img && imgFileInput.files && imgFileInput.files[0]) {
+                img = await fileToDataUrl(imgFileInput.files[0]);
+            }
+            if (!title) return;
+            const entry = { title, img };
+            todos.push(entry);
+            modalBg.style.display = 'none';
+            render();
+        };
+
+        function fileToDataUrl(file) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = e => resolve(e.target.result);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Done modal logic
+        doneBtn.onclick = () => {
+            doneModalBg.style.display = 'flex';
+            doneList.innerHTML = '';
+            if (done.length === 0) {
+                doneList.innerHTML = '<div style="color:#a259ff;opacity:0.7;">Noch nichts erledigt.</div>';
+            } else {
+                for (const item of done) {
+                    const row = document.createElement('div');
+                    row.style.display = 'flex';
+                    row.style.alignItems = 'center';
+                    row.style.gap = '16px';
+                    row.style.marginBottom = '18px';
+                    row.style.background = '#23232b';
+                    row.style.borderRadius = '12px';
+                    row.style.padding = '10px 12px';
+                    // Bild
+                    const img = document.createElement('img');
+                    img.src = item.img || 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80';
+                    img.alt = item.title;
+                    img.style.width = '54px';
+                    img.style.height = '54px';
+                    img.style.objectFit = 'cover';
+                    img.style.borderRadius = '8px';
+                    img.style.background = '#191927';
+                    // Info
+                    const info = document.createElement('div');
+                    info.innerHTML = `<div style="font-weight:600;font-size:1.08rem;">${item.title}</div>`;
+                    row.appendChild(img);
+                    row.appendChild(info);
+                    doneList.appendChild(row);
+                }
+            }
+        };
+        doneCloseBtn.onclick = () => {
+            doneModalBg.style.display = 'none';
+        };
+        doneModalBg.onclick = (e) => {
+            if (e.target === doneModalBg) doneModalBg.style.display = 'none';
+        };
+
+        // --- Initial load & render ---
+        loadState();
+        render();
+    </script>
+</body>
+</html>
