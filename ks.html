@@ -5,6 +5,7 @@
     <title>Filme / Serien</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        /* Bestehende Styles ... */
         body {
             background: #1a1625;
             color: #e0e0e0;
@@ -348,6 +349,7 @@
     ">
         👁️
     </button>
+    <!-- Modal für "angeschaut" -->
     <div id="ks-watched-modal-bg" class="modal-bg" style="display:none;">
         <div class="modal" style="max-width:500px;">
             <div style="font-size:1.3rem;color:#a259ff;font-family:'Montserrat',Arial,sans-serif;font-weight:700;margin-bottom:12px;">
@@ -361,6 +363,7 @@
             </div>
         </div>
     </div>
+    <!-- Modal für Hinzufügen -->
     <div id="ks-modal-bg" class="modal-bg" style="display:none;">
         <form class="modal" id="ks-add-form">
             <label for="ks-type">Typ</label>
@@ -379,11 +382,28 @@
             </div>
         </form>
     </div>
+    <!-- Neues Modal für Optionen bei angeschauten Elementen -->
+    <div id="ks-watched-options-modal-bg" class="modal-bg" style="display:none;">
+        <div class="modal" style="max-width:400px;">
+            <div style="font-size:1.3rem;color:#a259ff;font-family:'Montserrat',Arial,sans-serif;font-weight:700;margin-bottom:12px;">
+                Optionen
+            </div>
+            <div id="ks-watched-options-content" style="display:flex;flex-direction:column;gap:12px;">
+                <button type="button" class="modal-btn" id="ks-wait-btn">Auf neue Staffel / Folge warten</button>
+                <button type="button" class="modal-btn" id="ks-later-btn">Auf später ansehen</button>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="modal-btn cancel" id="ks-watched-options-close-btn">Schließen</button>
+            </div>
+        </div>
+    </div>
     <script>
         // --- State ---
         let ksSeries = [];
         let ksMovies = [];
         let ksWatched = [];
+        // Aktuell ausgewählter Index in ksWatched für das Optionsfeld
+        let currentWatchedIndex = null;
 
         // --- Local Storage Helpers ---
         const KS_STORAGE_KEY = 'notiq-ks-state-v1';
@@ -420,6 +440,12 @@
         const watchedList = document.getElementById('ks-watched-list');
         const watchedCloseBtn = document.getElementById('ks-watched-close-btn');
 
+        // Elemente für Optionsmodal
+        const watchedOptionsModalBg = document.getElementById('ks-watched-options-modal-bg');
+        const watchedOptionsCloseBtn = document.getElementById('ks-watched-options-close-btn');
+        const waitBtn = document.getElementById('ks-wait-btn');
+        const laterBtn = document.getElementById('ks-later-btn');
+
         // --- Helpers ---
         function render() {
             // Serien
@@ -428,9 +454,9 @@
                 seriesEmpty.style.display = '';
             } else {
                 seriesEmpty.style.display = 'none';
-                for (const [i, s] of ksSeries.entries()) {
+                ksSeries.forEach((s, i) => {
                     seriesList.appendChild(createCard(s, i, 'serie'));
-                }
+                });
             }
             // Filme
             moviesList.innerHTML = '';
@@ -438,9 +464,9 @@
                 moviesEmpty.style.display = '';
             } else {
                 moviesEmpty.style.display = 'none';
-                for (const [i, m] of ksMovies.entries()) {
+                ksMovies.forEach((m, i) => {
                     moviesList.appendChild(createCard(m, i, 'film'));
-                }
+                });
             }
             saveKsState();
         }
@@ -464,11 +490,11 @@
             };
             card.appendChild(removeBtn);
             // Watched button
-            const watchedBtn = document.createElement('button');
-            watchedBtn.className = 'watched-btn';
-            watchedBtn.innerText = 'Fertig';
-            watchedBtn.title = 'Als geschaut markieren';
-            watchedBtn.onclick = (e) => {
+            const watchedBtnCard = document.createElement('button');
+            watchedBtnCard.className = 'watched-btn';
+            watchedBtnCard.innerText = 'Fertig';
+            watchedBtnCard.title = 'Als geschaut markieren';
+            watchedBtnCard.onclick = (e) => {
                 e.stopPropagation();
                 card.classList.add('watched-anim');
                 card.style.transition = 'opacity 0.4s, transform 0.4s';
@@ -485,7 +511,7 @@
                     render();
                 }, 350);
             };
-            card.appendChild(watchedBtn);
+            card.appendChild(watchedBtnCard);
             // Image
             const img = document.createElement('img');
             img.className = 'card-img';
@@ -549,7 +575,7 @@
             if (ksWatched.length === 0) {
                 watchedList.innerHTML = '<div style="color:#a259ff;opacity:0.7;">Noch nichts angeschaut.</div>';
             } else {
-                for (const item of ksWatched) {
+                ksWatched.forEach((item, index) => {
                     const row = document.createElement('div');
                     row.style.display = 'flex';
                     row.style.alignItems = 'center';
@@ -558,6 +584,7 @@
                     row.style.background = '#23232b';
                     row.style.borderRadius = '12px';
                     row.style.padding = '10px 12px';
+                    row.style.cursor = 'pointer';
                     // Bild
                     const img = document.createElement('img');
                     img.src = item.img || 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80';
@@ -573,8 +600,13 @@
                         <div style="font-size:0.98rem;color:#a259ff;">${item.type}</div>`;
                     row.appendChild(img);
                     row.appendChild(info);
+                    // Beim Klick auf ein Zeilenelement wird das Optionsmodal geöffnet
+                    row.onclick = () => {
+                        currentWatchedIndex = index;
+                        watchedOptionsModalBg.style.display = 'flex';
+                    };
                     watchedList.appendChild(row);
-                }
+                });
             }
         };
         watchedCloseBtn.onclick = () => {
@@ -582,6 +614,29 @@
         };
         watchedModalBg.onclick = (e) => {
             if (e.target === watchedModalBg) watchedModalBg.style.display = 'none';
+        };
+
+        // Optionsmodal Logik
+        watchedOptionsCloseBtn.onclick = () => {
+            watchedOptionsModalBg.style.display = 'none';
+        };
+        watchedOptionsModalBg.onclick = (e) => {
+            if (e.target === watchedOptionsModalBg) watchedOptionsModalBg.style.display = 'none';
+        };
+
+        // Beispiel-Eventhandler für die Options-Buttons
+        waitBtn.onclick = () => {
+            // Hier kann der Code ergänzt werden,
+            // der den Zustand "Auf neue Staffel / Folge warten" verarbeitet.
+            console.log('Warten ausgewählt für:', ksWatched[currentWatchedIndex]);
+            watchedOptionsModalBg.style.display = 'none';
+        };
+
+        laterBtn.onclick = () => {
+            // Hier kann der Code ergänzt werden,
+            // der den Zustand "Auf später ansehen" verarbeitet.
+            console.log('Später ansehen ausgewählt für:', ksWatched[currentWatchedIndex]);
+            watchedOptionsModalBg.style.display = 'none';
         };
 
         // --- Initial load & render ---
