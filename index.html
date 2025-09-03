@@ -7,24 +7,24 @@
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #181824 0%, #23232b 100%);
+            background: linear-gradient(135deg, #f8fafc 0%, #e3e8ee 100%);
             margin: 0;
             padding: 0;
             text-align: center;
             min-height: 100vh;
             width: 100vw;
             overflow-x: hidden;
-            color: #f3f3f3;
+            color: #222c3a;
         }
         .logo {
             font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
             font-size: 3.2rem;
             font-weight: bold;
             letter-spacing: 0.22em;
-            color: #a259ff;
+            color: #ff7f50;
             margin-top: 48px;
             margin-bottom: 24px;
-            text-shadow: 0 4px 24px #23233a, 0 1px 0 #43e97b80;
+            text-shadow: 0 4px 24px #e3e8ee, 0 1px 0 #3b82f6;
         }
         .images-row {
             display: flex;
@@ -49,8 +49,8 @@
             align-items: stretch;
             justify-content: flex-end;
             height: 92%;
-            background: rgba(35,35,43,0.18);
-            box-shadow: 0 8px 32px 0 rgba(60,60,120,0.18), 0 1.5px 0 #43e97b40;
+            background: rgba(59,130,246,0.08);
+            box-shadow: 0 8px 32px 0 rgba(59,130,246,0.12), 0 1.5px 0 #ff7f5040;
             cursor: pointer;
             transition: box-shadow 0.25s, transform 0.25s;
         }
@@ -64,18 +64,18 @@
             background: transparent !important;
             display: block;
             transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
-            box-shadow: 0 4px 24px rgba(60,60,120,0.14);
+            box-shadow: 0 4px 24px rgba(59,130,246,0.10);
         }
         .image-container:hover,
         .image-container:focus-within {
             transform: scale(1.045);
-            box-shadow: 0 18px 56px 0 rgba(60,60,120,0.28), 0 2px 0 #43e97b80;
-            background: rgba(67,233,123,0.08);
+            box-shadow: 0 18px 56px 0 rgba(255,127,80,0.18), 0 2px 0 #3b82f680;
+            background: rgba(255,127,80,0.08);
         }
         .image-container:hover svg,
         .image-container:hover img {
             transform: scale(1.09);
-            box-shadow: 0 24px 72px 0 rgba(60,60,120,0.22);
+            box-shadow: 0 24px 72px 0 rgba(59,130,246,0.18);
             outline: none;
             background: transparent !important;
         }
@@ -135,117 +135,107 @@
             }
         }
     </style>
-    <!-- Optional: Google Fonts for cool font -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="logo">NOTIQ</div>
     <div class="images-row">
         <div class="image-container" onclick="window.location.href='ks.html'" style="cursor:pointer;">
-            <!-- F/S Logo SVG: F und S untereinander, Wörter auf gleicher Höhe, mehr Abstand -->
+            <!-- F/S Logo SVG: neue Farben -->
             <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" style="position:relative;">
                 <defs>
                     <radialGradient id="fsGlow" cx="50%" cy="50%" r="60%">
                         <stop offset="0%" stop-color="#fff" stop-opacity="0.18"/>
-                        <stop offset="100%" stop-color="#a259ff" stop-opacity="0"/>
+                        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
                     </radialGradient>
                     <linearGradient id="fsGradient" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#a259ff"/>
-                        <stop offset="100%" stop-color="#2323a0"/>
+                        <stop offset="0%" stop-color="#3b82f6"/>
+                        <stop offset="100%" stop-color="#ff7f50"/>
                     </linearGradient>
                     <clipPath id="roundedFS">
                         <rect x="0" y="0" width="300" height="300" rx="28" />
                     </clipPath>
                 </defs>
-                <!-- Background gradient -->
                 <rect x="0" y="0" width="300" height="300" rx="28" fill="url(#fsGradient)"/>
-                <!-- Abstract "art" shapes -->
                 <ellipse cx="90" cy="210" rx="60" ry="24" fill="#fff" opacity="0.08"/>
-                <ellipse cx="220" cy="80" rx="36" ry="16" fill="#a259ff" opacity="0.13"/>
+                <ellipse cx="220" cy="80" rx="36" ry="16" fill="#3b82f6" opacity="0.13"/>
                 <ellipse cx="220" cy="220" rx="28" ry="10" fill="#fff" opacity="0.07"/>
-                <ellipse cx="80" cy="80" rx="18" ry="8" fill="#a259ff" opacity="0.18"/>
+                <ellipse cx="80" cy="80" rx="18" ry="8" fill="#ff7f50" opacity="0.18"/>
                 <ellipse cx="150" cy="150" rx="110" ry="110" fill="url(#fsGlow)" />
-                <!-- Cool Icon: Filmrolle und Serienbildschirm -->
                 <g>
-                    <!-- Filmrolle -->
                     <circle cx="110" cy="110" r="28" fill="#fff" opacity="0.10"/>
-                    <circle cx="110" cy="110" r="18" fill="#a259ff" opacity="0.18"/>
+                    <circle cx="110" cy="110" r="18" fill="#3b82f6" opacity="0.18"/>
                     <circle cx="110" cy="110" r="7" fill="#fff" opacity="0.25"/>
                     <rect x="100" y="100" width="20" height="20" rx="6" fill="#fff" opacity="0.10" transform="rotate(45 110 110)"/>
-                    <!-- Serienbildschirm -->
                     <rect x="160" y="90" width="50" height="34" rx="8" fill="#fff" opacity="0.10"/>
-                    <rect x="170" y="100" width="30" height="14" rx="4" fill="#a259ff" opacity="0.18"/>
-                    <rect x="175" y="118" width="20" height="4" rx="2" fill="#fff" opacity="0.18"/>
+                    <rect x="170" y="100" width="30" height="14" rx="4" fill="#3b82f6" opacity="0.18"/>
+                    <rect x="175" y="118" width="20" height="4" rx="2" fill="#ff7f50" opacity="0.18"/>
                 </g>
-                <!-- F und S untereinander, Wörter auf gleicher Höhe, mehr Abstand -->
                 <g>
-                    <text x="80" y="120" fill="#fff" font-size="70" font-family="Montserrat, Arial, sans-serif" font-weight="200" letter-spacing="0.12em" style="filter: drop-shadow(0 2px 8px #a259ff80);">F</text>
-                    <text x="132" y="112" fill="#fff" font-size="28" font-family="Montserrat, Arial, sans-serif" font-weight="500" opacity="0.85" alignment-baseline="middle">ilme</text>
-                    <text x="80" y="200" fill="#fff" font-size="70" font-family="Montserrat, Arial, sans-serif" font-weight="bold" letter-spacing="0.12em" style="filter: drop-shadow(0 2px 8px #a259ff80);">S</text>
-                    <text x="132" y="189" fill="#fff" font-size="28" font-family="Montserrat, Arial, sans-serif" font-weight="500" opacity="0.85" alignment-baseline="middle">erien</text>
+                    <text x="80" y="120" fill="#3b82f6" font-size="70" font-family="Montserrat, Arial, sans-serif" font-weight="200" letter-spacing="0.12em" style="filter: drop-shadow(0 2px 8px #ff7f5080);">F</text>
+                    <text x="132" y="112" fill="#222c3a" font-size="28" font-family="Montserrat, Arial, sans-serif" font-weight="500" opacity="0.85" alignment-baseline="middle">ilme</text>
+                    <text x="80" y="200" fill="#ff7f50" font-size="70" font-family="Montserrat, Arial, sans-serif" font-weight="bold" letter-spacing="0.12em" style="filter: drop-shadow(0 2px 8px #3b82f680);">S</text>
+                    <text x="132" y="189" fill="#222c3a" font-size="28" font-family="Montserrat, Arial, sans-serif" font-weight="500" opacity="0.85" alignment-baseline="middle">erien</text>
                 </g>
-                <circle cx="150" cy="150" r="60" fill="none" stroke="#fff" stroke-opacity="0.12" stroke-width="8"/>
+                <circle cx="150" cy="150" r="60" fill="none" stroke="#3b82f6" stroke-opacity="0.12" stroke-width="8"/>
             </svg>
         </div>
         <div class="image-container" onclick="window.location.href='todo.html'" style="cursor:pointer;">
-            <!-- TO DO Logo SVG -->
+            <!-- TO DO Logo SVG: neue Farben -->
             <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <radialGradient id="todoGlow" cx="50%" cy="50%" r="60%">
                         <stop offset="0%" stop-color="#fff" stop-opacity="0.12"/>
-                        <stop offset="100%" stop-color="#a259ff" stop-opacity="0"/>
+                        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
                     </radialGradient>
                     <linearGradient id="todoGradient" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#a259ff"/>
-                        <stop offset="100%" stop-color="#4e54c8"/>
+                        <stop offset="0%" stop-color="#3b82f6"/>
+                        <stop offset="100%" stop-color="#ff7f50"/>
                     </linearGradient>
                 </defs>
                 <rect x="0" y="0" width="300" height="300" rx="28" fill="url(#todoGradient)"/>
                 <ellipse cx="150" cy="150" rx="110" ry="110" fill="url(#todoGlow)" />
-                <!-- Checkliste-Icon -->
                 <g>
                     <rect x="85" y="90" width="130" height="120" rx="22" fill="#fff" opacity="0.08"/>
-                    <rect x="100" y="110" width="100" height="22" rx="8" fill="#23232b" opacity="0.18"/>
-                    <rect x="100" y="145" width="100" height="22" rx="8" fill="#23232b" opacity="0.18"/>
-                    <rect x="100" y="180" width="100" height="22" rx="8" fill="#23232b" opacity="0.18"/>
-                    <!-- Häkchen -->
-                    <polyline points="112,122 120,130 132,116" fill="none" stroke="#a259ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                    <polyline points="112,157 120,165 132,151" fill="none" stroke="#43e97b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                    <polyline points="112,192 120,200 132,186" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="100" y="110" width="100" height="22" rx="8" fill="#e3e8ee" opacity="0.18"/>
+                    <rect x="100" y="145" width="100" height="22" rx="8" fill="#e3e8ee" opacity="0.18"/>
+                    <rect x="100" y="180" width="100" height="22" rx="8" fill="#e3e8ee" opacity="0.18"/>
+                    <polyline points="112,122 120,130 132,116" fill="none" stroke="#3b82f6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <polyline points="112,157 120,165 132,151" fill="none" stroke="#ff7f50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <polyline points="112,192 120,200 132,186" fill="none" stroke="#222c3a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                 </g>
-                <text x="50%" y="70" text-anchor="middle" fill="#fff" font-size="32" font-family="Montserrat, Arial, sans-serif" font-weight="bold" dy=".3em" letter-spacing="0.1em" style="filter: drop-shadow(0 2px 8px #a259ff80);">TO DO</text>
-                <circle cx="150" cy="150" r="60" fill="none" stroke="#fff" stroke-opacity="0.12" stroke-width="8"/>
+                <text x="50%" y="70" text-anchor="middle" fill="#3b82f6" font-size="32" font-family="Montserrat, Arial, sans-serif" font-weight="bold" dy=".3em" letter-spacing="0.1em" style="filter: drop-shadow(0 2px 8px #ff7f5080);">TO DO</text>
+                <circle cx="150" cy="150" r="60" fill="none" stroke="#ff7f50" stroke-opacity="0.12" stroke-width="8"/>
             </svg>
         </div>
         <div class="image-container" onclick="window.location.href='kaufen.html'" style="cursor:pointer;">
-            <!-- Kaufen Logo SVG -->
+            <!-- Kaufen Logo SVG: neue Farben -->
             <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <radialGradient id="buyGlow" cx="50%" cy="50%" r="60%">
                         <stop offset="0%" stop-color="#fff" stop-opacity="0.12"/>
-                        <stop offset="100%" stop-color="#a259ff" stop-opacity="0"/>
+                        <stop offset="100%" stop-color="#ff7f50" stop-opacity="0"/>
                     </radialGradient>
                     <linearGradient id="buyGradient" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stop-color="#a259ff"/>
-                        <stop offset="100%" stop-color="#43e97b"/>
+                        <stop offset="0%" stop-color="#ff7f50"/>
+                        <stop offset="100%" stop-color="#3b82f6"/>
                     </linearGradient>
                 </defs>
                 <rect x="0" y="0" width="300" height="300" rx="28" fill="url(#buyGradient)"/>
                 <ellipse cx="150" cy="150" rx="110" ry="110" fill="url(#buyGlow)" />
-                <!-- Einkaufswagen-Icon -->
                 <g>
                     <circle cx="150" cy="150" r="80" fill="#fff" opacity="0.08"/>
-                    <rect x="100" y="110" width="100" height="60" rx="18" fill="#23232b" opacity="0.18"/>
+                    <rect x="100" y="110" width="100" height="60" rx="18" fill="#e3e8ee" opacity="0.18"/>
                     <path d="M110 130 L190 130 L180 170 L120 170 Z" fill="#fff" opacity="0.18"/>
                     <circle cx="130" cy="180" r="14" fill="#fff" opacity="0.85"/>
                     <circle cx="170" cy="180" r="14" fill="#fff" opacity="0.85"/>
-                    <circle cx="130" cy="180" r="8" fill="#a259ff"/>
-                    <circle cx="170" cy="180" r="8" fill="#a259ff"/>
-                    <rect x="120" y="120" width="60" height="30" rx="8" fill="#a259ff" opacity="0.85"/>
-                    <rect x="135" y="110" width="30" height="12" rx="6" fill="#43e97b" opacity="0.85"/>
+                    <circle cx="130" cy="180" r="8" fill="#3b82f6"/>
+                    <circle cx="170" cy="180" r="8" fill="#ff7f50"/>
+                    <rect x="120" y="120" width="60" height="30" rx="8" fill="#3b82f6" opacity="0.85"/>
+                    <rect x="135" y="110" width="30" height="12" rx="6" fill="#ff7f50" opacity="0.85"/>
                 </g>
-                <text x="50%" y="90" text-anchor="middle" fill="#fff" font-size="32" font-family="Montserrat, Arial, sans-serif" font-weight="bold" dy=".3em" letter-spacing="0.1em" style="filter: drop-shadow(0 2px 8px #43e97b80);">BUY</text>
-                <circle cx="150" cy="150" r="60" fill="none" stroke="#fff" stroke-opacity="0.12" stroke-width="8"/>
+                <text x="50%" y="90" text-anchor="middle" fill="#ff7f50" font-size="32" font-family="Montserrat, Arial, sans-serif" font-weight="bold" dy=".3em" letter-spacing="0.1em" style="filter: drop-shadow(0 2px 8px #3b82f680);">BUY</text>
+                <circle cx="150" cy="150" r="60" fill="none" stroke="#3b82f6" stroke-opacity="0.12" stroke-width="8"/>
             </svg>
         </div>
     </div>
