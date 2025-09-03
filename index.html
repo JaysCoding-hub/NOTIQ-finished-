@@ -7,51 +7,52 @@
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: #23232b;
+            background: linear-gradient(135deg, #181824 0%, #23232b 100%);
             margin: 0;
             padding: 0;
             text-align: center;
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
-            overflow: hidden;
-            color: #e0e0e0;
+            overflow-x: hidden;
+            color: #f3f3f3;
         }
         .logo {
             font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
-            font-size: 2.7rem;
+            font-size: 3.2rem;
             font-weight: bold;
-            letter-spacing: 0.2em;
+            letter-spacing: 0.22em;
             color: #a259ff;
-            margin-top: 38px;
-            margin-bottom: 14px;
-            text-shadow: 2px 2px 8px #23233a;
+            margin-top: 48px;
+            margin-bottom: 24px;
+            text-shadow: 0 4px 24px #23233a, 0 1px 0 #43e97b80;
         }
         .images-row {
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            height: calc(100vh - 70px);
+            height: calc(100vh - 120px);
             width: 100vw;
             margin: 0;
-            gap: 28px;
-            background: transparent; /* sicherstellen, dass kein Hintergrund gesetzt ist */
+            gap: 38px;
+            background: transparent;
         }
         .image-container {
             flex: 1 1 0;
-            max-width: 370px;
+            max-width: 420px;
             min-width: 260px;
             position: relative;
             margin: 0;
-            border-radius: 36px;
+            border-radius: 48px;
             overflow: visible;
             display: flex;
             flex-direction: column;
             align-items: stretch;
             justify-content: flex-end;
-            height: 88%;
-            background: transparent; /* HIER: Hintergrund komplett transparent */
-            box-shadow: none;
+            height: 92%;
+            background: rgba(35,35,43,0.18);
+            box-shadow: 0 8px 32px 0 rgba(60,60,120,0.18), 0 1.5px 0 #43e97b40;
             cursor: pointer;
+            transition: box-shadow 0.25s, transform 0.25s;
         }
         .image-container svg, .image-container img {
             width: 100%;
@@ -59,18 +60,24 @@
             min-height: 0;
             min-width: 0;
             margin: 0;
-            border-radius: 36px;
-            background: transparent !important; /* HIER: SVG/IMG Hintergrund transparent */
+            border-radius: 48px;
+            background: transparent !important;
             display: block;
             transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s;
-            box-shadow: 0 2px 18px rgba(60,60,120,0.10);
+            box-shadow: 0 4px 24px rgba(60,60,120,0.14);
+        }
+        .image-container:hover,
+        .image-container:focus-within {
+            transform: scale(1.045);
+            box-shadow: 0 18px 56px 0 rgba(60,60,120,0.28), 0 2px 0 #43e97b80;
+            background: rgba(67,233,123,0.08);
         }
         .image-container:hover svg,
         .image-container:hover img {
             transform: scale(1.09);
-            box-shadow: 0 12px 36px 0 rgba(60,60,120,0.18);
+            box-shadow: 0 24px 72px 0 rgba(60,60,120,0.22);
             outline: none;
-            background: transparent !important; /* HIER: auch beim Hover transparent */
+            background: transparent !important;
         }
         .image-container:focus-within svg,
         .image-container:focus-within img {
@@ -81,11 +88,23 @@
             display: none;
         }
         /* Responsive adjustments */
+        @media (max-width: 1100px) {
+            .images-row {
+                gap: 22px;
+            }
+            .image-container {
+                max-width: 95vw;
+                min-width: 0;
+                width: 90vw;
+                height: 260px;
+                border-radius: 32px;
+            }
+        }
         @media (max-width: 900px) {
             .images-row {
                 flex-direction: column;
                 align-items: center;
-                gap: 18px;
+                gap: 22px;
                 height: auto;
             }
             .image-container {
@@ -93,13 +112,14 @@
                 min-width: 0;
                 width: 90vw;
                 height: 220px;
+                border-radius: 32px;
             }
         }
         @media (max-width: 600px) {
             .logo {
-                font-size: 2rem;
+                font-size: 2.2rem;
                 margin-top: 22px;
-                margin-bottom: 8px;
+                margin-bottom: 12px;
             }
             .images-row {
                 gap: 12px;
