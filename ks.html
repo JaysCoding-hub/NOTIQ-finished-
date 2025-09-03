@@ -5,10 +5,9 @@
     <title>Filme / Serien</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Bestehende Styles ... */
         body {
-            background: #1a1625;
-            color: #e0e0e0;
+            background: linear-gradient(135deg, #181824 0%, #23233a 100%);
+            color: #eaf2fb;
             font-family: 'Segoe UI', Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -17,95 +16,101 @@
             flex-direction: column;
         }
         .headline {
-            font-size: 2.2rem;
-            color: #a259ff;
+            font-size: 2.5rem;
+            color: #43e97b;
             font-family: 'Montserrat', Arial, sans-serif;
-            letter-spacing: 0.12em;
-            font-weight: 700;
-            margin: 38px 0 18px 38px;
+            letter-spacing: 0.14em;
+            font-weight: 800;
+            margin: 48px 0 22px 48px;
             text-align: left;
+            text-shadow: 0 4px 32px #23233a, 0 1px 0 #43e97b80;
         }
         .section-title {
-            font-size: 1.3rem;
-            color: #fff;
+            font-size: 1.4rem;
+            color: #a259ff;
             font-family: 'Montserrat', Arial, sans-serif;
             font-weight: 600;
-            margin: 32px 0 12px 38px;
+            margin: 36px 0 16px 48px;
             text-align: left;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.09em;
+            text-shadow: 0 2px 16px #23233a;
         }
         .carousel {
             display: flex;
             overflow-x: auto;
-            gap: 22px;
-            padding: 0 0 8px 38px;
+            gap: 28px;
+            padding: 0 0 12px 48px;
             scrollbar-width: thin;
-            scrollbar-color: #a259ff #23232b;
+            scrollbar-color: #43e97b #23233a;
         }
         .carousel::-webkit-scrollbar {
             height: 8px;
-            background: #23232b;
+            background: #23233a;
         }
         .carousel::-webkit-scrollbar-thumb {
-            background: #a259ff;
+            background: #43e97b;
             border-radius: 8px;
         }
         .card {
-            flex: 0 0 180px;
-            background: #23232b;
-            border-radius: 18px;
-            box-shadow: 0 2px 12px rgba(60,60,120,0.13);
+            flex: 0 0 210px;
+            background: linear-gradient(135deg, #23233a 60%, #181824 100%);
+            border-radius: 28px;
+            box-shadow: 0 6px 32px rgba(67,233,123,0.13), 0 1.5px 0 #43e97b40;
             overflow: hidden;
             position: relative;
-            transition: transform 0.18s cubic-bezier(.4,2,.6,1), box-shadow 0.18s;
+            transition: transform 0.22s cubic-bezier(.4,2,.6,1), box-shadow 0.22s;
             cursor: pointer;
         }
         .card:hover {
-            transform: scale(1.07);
-            box-shadow: 0 8px 32px 0 #a259ff44;
+            transform: scale(1.09);
+            box-shadow: 0 16px 48px 0 #43e97b55, 0 2px 0 #a259ff80;
             z-index: 2;
         }
         .card-img {
             width: 100%;
-            height: 240px;
+            height: 260px;
             object-fit: cover;
-            background: #191927;
+            background: #181824;
             display: block;
+            border-radius: 28px 28px 0 0;
+            box-shadow: 0 2px 18px #23233a88;
         }
         .card-title {
-            font-size: 1.05rem;
-            color: #fff;
+            font-size: 1.15rem;
+            color: #eaf2fb;
             font-family: 'Montserrat', Arial, sans-serif;
-            font-weight: 600;
-            margin: 12px 0 10px 0;
-            padding: 0 14px;
+            font-weight: 700;
+            margin: 16px 0 12px 0;
+            padding: 0 18px;
             text-align: left;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            text-shadow: 0 2px 12px #23233a;
         }
         .plus-btn {
             position: fixed;
-            right: 32px;
-            bottom: 32px;
-            width: 62px;
-            height: 62px;
+            right: 38px;
+            bottom: 38px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #a259ff 60%, #6d28d9 100%);
-            color: #fff;
+            background: linear-gradient(135deg, #43e97b 60%, #a259ff 100%);
+            color: #181824;
             border: none;
-            box-shadow: 0 4px 24px #a259ff55;
+            box-shadow: 0 8px 32px #43e97b55, 0 2px 0 #a259ff80;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.7rem;
+            font-size: 3rem;
             cursor: pointer;
             z-index: 100;
-            transition: background 0.18s, box-shadow 0.18s;
+            transition: background 0.22s, box-shadow 0.22s, color 0.22s;
         }
         .plus-btn:hover {
-            background: linear-gradient(135deg, #a259ff 80%, #7c3aed 100%);
-            box-shadow: 0 8px 32px #a259ff99;
+            background: linear-gradient(135deg, #a259ff 80%, #43e97b 100%);
+            color: #fff;
+            box-shadow: 0 16px 48px #a259ff99;
         }
         .main-content {
             flex: 1 1 auto;
@@ -116,160 +121,216 @@
         .modal-bg {
             position: fixed;
             left: 0; top: 0; right: 0; bottom: 0;
-            background: rgba(30,20,60,0.85);
+            background: rgba(24,24,36,0.92);
             z-index: 200;
             display: flex;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(4px);
         }
         .modal {
-            background: #23232b;
-            border-radius: 18px;
-            box-shadow: 0 4px 32px #a259ff55;
-            padding: 32px 28px 24px 28px;
+            background: linear-gradient(135deg, #23233a 60%, #181824 100%);
+            border-radius: 28px;
+            box-shadow: 0 8px 48px #43e97b55, 0 2px 0 #a259ff80;
+            padding: 38px 32px 28px 32px;
             min-width: 340px;
-            max-width: 94vw;
+            max-width: 96vw;
             display: flex;
             flex-direction: column;
             align-items: stretch;
-            gap: 18px;
+            gap: 22px;
         }
         .modal label {
-            color: #a259ff;
+            color: #43e97b;
             font-family: 'Montserrat', Arial, sans-serif;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             margin-bottom: 4px;
+            font-weight: 600;
         }
         .modal input, .modal select {
-            background: #191927;
-            color: #fff;
+            background: #181824;
+            color: #eaf2fb;
             border: none;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-size: 1rem;
-            margin-bottom: 10px;
+            border-radius: 12px;
+            padding: 10px 16px;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
             font-family: inherit;
+            box-shadow: 0 2px 12px #23233a55;
         }
         .modal input[type="file"] {
-            color: #fff;
+            color: #eaf2fb;
             background: none;
             padding: 0;
         }
         .modal-actions {
             display: flex;
             justify-content: flex-end;
-            gap: 16px;
-            margin-top: 8px;
+            gap: 18px;
+            margin-top: 12px;
         }
         .modal-btn {
-            background: #a259ff;
-            color: #fff;
+            background: linear-gradient(135deg, #43e97b 60%, #a259ff 100%);
+            color: #181824;
             border: none;
-            border-radius: 8px;
-            padding: 8px 22px;
-            font-size: 1.1rem;
+            border-radius: 12px;
+            padding: 10px 28px;
+            font-size: 1.15rem;
             font-family: 'Montserrat', Arial, sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.18s;
+            transition: background 0.22s, color 0.22s;
         }
         .modal-btn.cancel {
-            background: #23232b;
-            color: #a259ff;
-            border: 1px solid #a259ff;
+            background: #23233a;
+            color: #43e97b;
+            border: 2px solid #43e97b;
         }
         .remove-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #a259ff;
+            top: 14px;
+            right: 14px;
+            background: linear-gradient(135deg, #a259ff 60%, #43e97b 100%);
             color: #fff;
             border: none;
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            font-size: 1.3rem;
+            width: 36px;
+            height: 36px;
+            font-size: 1.5rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 2px 8px #a259ff44;
-            opacity: 0.85;
-            transition: background 0.18s, opacity 0.18s;
+            box-shadow: 0 2px 12px #a259ff44;
+            opacity: 0.92;
+            transition: background 0.22s, opacity 0.22s;
             z-index: 10;
         }
         .remove-btn:hover {
-            background: #7c3aed;
+            background: linear-gradient(135deg, #43e97b 80%, #a259ff 100%);
             opacity: 1;
         }
         .watched-btn {
             position: absolute;
-            bottom: 10px;
-            right: 10px;
-            background: #43e97b;
-            color: #23232b;
+            bottom: 14px;
+            right: 14px;
+            background: linear-gradient(135deg, #43e97b 60%, #a259ff 100%);
+            color: #181824;
             border: none;
             border-radius: 18px;
-            padding: 6px 18px;
-            font-size: 1rem;
+            padding: 8px 22px;
+            font-size: 1.05rem;
             font-family: 'Montserrat', Arial, sans-serif;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 2px 8px #43e97b44;
-            opacity: 0.92;
-            transition: background 0.18s, opacity 0.18s;
+            box-shadow: 0 2px 12px #43e97b44;
+            opacity: 0.96;
+            transition: background 0.22s, opacity 0.22s;
             z-index: 10;
         }
         .watched-btn:hover {
-            background: #2ecc71;
+            background: linear-gradient(135deg, #a259ff 80%, #43e97b 100%);
+            color: #fff;
             opacity: 1;
         }
         .empty-hint {
-            color: #a259ff;
-            font-size: 1.1rem;
-            margin: 36px 0 0 38px;
+            color: #43e97b;
+            font-size: 1.15rem;
+            margin: 44px 0 0 48px;
             font-family: 'Montserrat', Arial, sans-serif;
             opacity: 0.7;
+            text-shadow: 0 2px 12px #23233a;
+        }
+        a[title="Zurück"] {
+            position: fixed;
+            top: 28px;
+            right: 38px;
+            z-index: 2000;
+            text-decoration: none;
+            color: #43e97b;
+            font-size: 1.45rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: rgba(35,35,58,0.96);
+            border-radius: 32px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 18px #43e97b33;
+            transition: background 0.22s, color 0.22s;
+            padding: 0 28px 0 22px;
+            min-width: 110px;
+            gap: 10px;
+        }
+        a[title="Zurück"]:hover {
+            background: linear-gradient(135deg, #43e97b 80%, #a259ff 100%);
+            color: #181824;
+        }
+        #ks-watched-btn {
+            position: fixed;
+            right: 120px;
+            bottom: 38px;
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a259ff 60%, #43e97b 100%);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 24px #a259ff44;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            cursor: pointer;
+            z-index: 101;
+            transition: background 0.22s, box-shadow 0.22s;
+        }
+        #ks-watched-btn:hover {
+            background: linear-gradient(135deg, #43e97b 80%, #a259ff 100%);
+            color: #181824;
+            box-shadow: 0 8px 32px #43e97b99;
         }
         /* Responsive adjustments */
         @media (max-width: 900px) {
             .headline {
-                font-size: 1.5rem;
-                margin: 22px 0 12px 18px;
+                font-size: 1.7rem;
+                margin: 28px 0 14px 18px;
             }
             .section-title {
-                font-size: 1.05rem;
-                margin: 18px 0 8px 18px;
+                font-size: 1.15rem;
+                margin: 22px 0 10px 18px;
             }
             .carousel {
-                gap: 10px;
-                padding-left: 10px;
+                gap: 14px;
+                padding-left: 14px;
             }
             .card {
                 flex: 0 0 140px;
+                border-radius: 18px;
             }
             .card-img {
                 height: 120px;
+                border-radius: 18px 18px 0 0;
             }
         }
         @media (max-width: 600px) {
             .headline {
-                font-size: 1.1rem;
-                margin: 14px 0 8px 8px;
+                font-size: 1.15rem;
+                margin: 16px 0 8px 8px;
             }
             .section-title {
-                font-size: 0.95rem;
-                margin: 12px 0 6px 8px;
+                font-size: 0.98rem;
+                margin: 10px 0 6px 8px;
             }
             .carousel {
-                gap: 6px;
+                gap: 8px;
                 padding-left: 4px;
             }
             .card {
                 flex: 0 0 110px;
-                border-radius: 10px;
+                border-radius: 12px;
             }
             .card-img {
                 height: 70px;
-                border-radius: 10px;
+                border-radius: 12px 12px 0 0;
             }
             .plus-btn, #ks-watched-btn {
                 width: 44px;
@@ -284,6 +345,16 @@
             .modal {
                 min-width: 90vw;
                 padding: 18px 8px 14px 8px;
+                border-radius: 18px;
+            }
+            a[title="Zurück"] {
+                top: 12px;
+                right: 12px;
+                font-size: 1.05rem;
+                height: 38px;
+                min-width: 70px;
+                border-radius: 18px;
+                padding: 0 12px 0 8px;
             }
         }
     </style>
@@ -296,21 +367,21 @@
         right: 32px;
         z-index: 2000;
         text-decoration: none;
-        color: #a259ff;
-        font-size: 1.35rem;
+        color: #43e97b;
+        font-size: 1.45rem;
         font-family: 'Montserrat', Arial, sans-serif;
-        background: rgba(35,35,43,0.92);
-        border-radius: 28px;
-        height: 48px;
+        background: rgba(35,35,58,0.96);
+        border-radius: 32px;
+        height: 54px;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 2px 12px #a259ff33;
-        transition: background 0.18s, color 0.18s;
-        padding: 0 22px 0 18px;
-        min-width: 90px;
-        gap: 8px;
-    " onmouseover="this.style.background='#a259ff';this.style.color='#fff';" onmouseout="this.style.background='rgba(35,35,43,0.92)';this.style.color='#a259ff';">
+        box-shadow: 0 2px 18px #43e97b33;
+        transition: background 0.22s, color 0.22s;
+        padding: 0 28px 0 22px;
+        min-width: 110px;
+        gap: 10px;
+    " onmouseover="this.style.background='#43e97b';this.style.color='#181824';" onmouseout="this.style.background='rgba(35,35,58,0.96)';this.style.color='#43e97b';">
         Zurück
         <span style="font-size:1.1rem; margin-left:4px; display:inline-block; vertical-align:middle;">&#8592;</span>
     </a>
@@ -330,22 +401,22 @@
     <button class="plus-btn" title="Hinzufügen" id="ks-add-btn">+</button>
     <button id="ks-watched-btn" title="Angeschaut" style="
         position: fixed;
-        right: 110px;
-        bottom: 32px;
-        width: 48px;
-        height: 48px;
+        right: 120px;
+        bottom: 38px;
+        width: 54px;
+        height: 54px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #6d28d9 60%, #a259ff 100%);
+        background: linear-gradient(135deg, #a259ff 60%, #43e97b 100%);
         color: #fff;
         border: none;
-        box-shadow: 0 4px 18px #a259ff44;
+        box-shadow: 0 4px 24px #a259ff44;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.5rem;
+        font-size: 1.7rem;
         cursor: pointer;
         z-index: 101;
-        transition: background 0.18s, box-shadow 0.18s;
+        transition: background 0.22s, box-shadow 0.22s;
     ">
         👁️
     </button>
